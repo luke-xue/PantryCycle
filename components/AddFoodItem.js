@@ -14,11 +14,12 @@ import {
 
 import { Formik } from 'formik';
 
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { SafeAreaView, StyleSheet, View, TextInput } from "react-native";
 
 const AddFoodItem = () => {
     return (
-    <Formik
+    <View style={styles.bg}>
+    <Formik style={styles.form}
         initialValues={{restaurant:'', item:'', description:'', quantity:'', calories:''}}
         onSubmit={(values, { resetForm }) => {
             console.log('submitted', values)
@@ -92,6 +93,7 @@ const AddFoodItem = () => {
       </ScrollView>
         )}
     </Formik>
+    </View>
     )
   };
 
@@ -102,8 +104,11 @@ const AddFoodItem = () => {
       margin: 12,
       padding: 10,
       alignSelf: "center",
-      color: "red"
+      backgroundColor: "#87ab69"
     },
+    bg: {
+        // backgroundColor: "#c7ddb5"
+    }
 });
 
 
