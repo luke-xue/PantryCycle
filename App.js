@@ -4,8 +4,7 @@ import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Homepage from "./components/Homepage.js";
-// import Giverpage from "./components/Giverpage.js";
-import Giverpage2 from "./components/Giverpage2.js";
+import Giverpage from "./components/Giverpage.js";
 import Chooserpage from "./components/Chooserpage.js";
 import React, { useEffect, useState, useRef, useContext } from "react";
 
@@ -29,7 +28,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Homepage} />
-          <Stack.Screen name="Giver" component={Giverpage2} />
+          <Stack.Screen name="Giver" component={Giverpage} />
           <Stack.Screen name="Chooser" component={Chooserpage} />
         </Stack.Navigator>
       </NavigationContainer>

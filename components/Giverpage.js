@@ -22,15 +22,11 @@ import {
   import { SafeAreaView, StyleSheet, TextInput } from "react-native";
   import AddFoodItem from "./AddFoodItem.js";
 
-  const Giverpage = () => {
 
-    function sendValues(number) {
-        console.log(number);
-    };
+  const Giverpage = () => {
   
     return (
         <Box>
-            <Text style={styles.titleText}>Items</Text>
             <AddFoodItem/>
         </Box>
 
@@ -42,7 +38,7 @@ import {
       height: 40,
       margin: 12,
       borderWidth: 1,
-      padding: 10,
+      padding: 10
     },
 
     titleText: {
@@ -50,7 +46,17 @@ import {
         fontWeight: "bold",
         marginTop: 20,
         marginLeft: 20
-    }
+    },
+
+        restaurant: {
+          height: 40,
+          marginTop: 12,
+          marginHorizontal: 12,
+          borderWidth: 1,
+          padding: 10,
+          width: 300,
+          marginLeft: 20
+        }
   });
 
   export default Giverpage;
