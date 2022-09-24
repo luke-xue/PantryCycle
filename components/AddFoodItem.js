@@ -16,12 +16,33 @@ import { Formik } from 'formik';
 
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 
+const addFood = async (in_val) => {
+  const options = {
+    method: "POST",
+    body: JSON.stringify({ 
+      Restaurant: in_val.restaurant,
+      Name: in_val.item,
+      Type: 'N/A',
+      Count: in_val.quantity,
+      Lat: 'N/A',
+      Long: 'N/A',
+      Calories: 'N/A',
+      Footprint: 'N/A',
+      Description: in_val.description,
+      Image: 'N/A'
+     })
+  };
+
+  fetch("http://127.0.0.1:5000/add", options)
+}
+
 const AddFoodItem = () => {
     return (
     <Formik
         initialValues={{restaurant:'', item:'', description:'', quantity:'', calories:''}}
         onSubmit={(values, { resetForm }) => {
-            console.log('submitted', values)
+            // console.log('submitted', values)
+            addFood(values);
             resetForm({values: ''});
         }}
 
@@ -107,4 +128,4 @@ const AddFoodItem = () => {
 });
 
 
-  export default AddFoodItem;
+export default AddFoodItem;

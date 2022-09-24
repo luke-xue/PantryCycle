@@ -183,7 +183,7 @@ const Chooserpage = ({ navigation }) => {
       var base64Icon = 'data:image/png;base64,' + restaurants[keyName][0]["Image"]
       tempItem = <Restaurant name={keyName} key={i} base64Icon={base64Icon} />;
       curr[i] = tempItem;
-      i++;c
+      i++;
     }
     )
   }
