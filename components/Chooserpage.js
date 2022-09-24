@@ -21,6 +21,11 @@ const Restaurant = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
   const [currRes, setCurrRes] = useState("");
+  // const [togglePref, setTogglePref] = useState(False)
+
+  // if (togglePref){
+  //   getOptimizedRestaurants();
+  // }
 
   useEffect(() => {
     getRestaurants();
@@ -38,6 +43,21 @@ const Restaurant = (props) => {
       });
   };
 
+  // const getOptimizedRestaurants = async () => {
+  //   const options = {
+  //     method: "GET",
+  //     body: JSON.stringify({
+  //       Lat: 40.8098,
+  //       Long: -73.9628
+  //     })
+  //   };
+
+  //   fetch("http://127.0.0.1:5000/rank", options)
+  //     .then((res) => res.json())
+  //     .then((text) => {
+  //       setRestaurants(text);
+  //     });
+  // };
   items = [];
   if (currRes) {
     i = 0;
@@ -105,7 +125,8 @@ const Restaurant = (props) => {
               <AspectRatio w="140" ratio={1 / 1}>
                 <Image
                   source={{
-                    uri: "https://spicecravings.com/wp-content/uploads/2020/12/Chicken-Kathi-Roll-Featured-1.jpg",
+                    // uri: "https://spicecravings.com/wp-content/uploads/2020/12/Chicken-Kathi-Roll-Featured-1.jpg",
+                   uri: props.base64Icon
                   }}
                   alt="image"
                 />
@@ -157,14 +178,22 @@ const Chooserpage = ({ navigation }) => {
   curr = [];
   if (restaurants) {
     i = 0;
-    for (var key in restaurants) {
-      tempItem = <Restaurant name={key} key={i} />;
+    Object.keys(restaurants).map(function(keyName, keyIndex) {
+    // for (var key in restaurants) {
+      var base64Icon = 'data:image/png;base64,' + restaurants[keyName][0]["Image"]
+      tempItem = <Restaurant name={keyName} key={i} base64Icon={base64Icon} />;
       curr[i] = tempItem;
-      i++;
+      i++;c
     }
+    )
   }
 
-  return <View>{curr}</View>;
+  return (
+    <View>
+  <Button marginTop="5" marginLeft="3" marginBottom="3" marginRight="5" onPress={() => setCurrRes(!currRes)}>Toggle Optimization Algorithm</Button>
+  <View>{curr}</View>
+  </View>
+  );
 
   // return (
   //   <View>
