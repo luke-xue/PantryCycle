@@ -11,58 +11,126 @@ import {
   Stack,
   Text,
   View,
+  Button,
+  Modal,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 
 const Restaurant = (props) => {
+  const [showModal, setShowModal] = useState(false);
+  const [restaurants, setRestaurants] = useState([]);
+  const [currRes, setCurrRes] = useState("");
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  const getRestaurants = async () => {
+    const options = {
+      method: "GET",
+    };
+
+    fetch("http://127.0.0.1:5000/readAll", options)
+      .then((res) => res.json())
+      .then((text) => {
+        setRestaurants(text);
+      });
+  };
+
+  items = [];
+  if (currRes) {
+    i = 0;
+    // Object.keys(restaurants).map(function(keyName, keyIndex) {
+      restaurants[currRes].forEach((food) => {
+        tempItem = (
+          <HStack alignItems="center" justifyContent="space-between" key={i}>
+            <Text fontWeight="medium">{food["Name"]}</Text>
+            <Text color="black">Amt: {food['Count']}, ({food['Footprint']}gCO2)</Text>
+          </HStack>
+        )
+        items[i] = tempItem
+        i++
+        })
+    // })
+    // for (var key in restaurants) {
+    //   tempItem = (
+    //     <HStack alignItems="center" justifyContent="space-between" key={i}>
+    //       <Text fontWeight="medium">{restaurants[key]['Name']}</Text>
+    //       <Text color="blueGray.400">{restaurants[key]['Count']}</Text>
+    //     </HStack>
+    //   );
+    //   items[i] = tempItem;
+    //   i++;
+    // }
+  }
+
   return (
     <Box alignItems="center">
-      <Box
-        maxW="80"
-        rounded="lg"
-        overflow="hidden"
-        borderColor="coolGray.200"
-        borderWidth="1"
-        _dark={{
-          borderColor: "coolGray.600",
-          backgroundColor: "gray.700",
-        }}
-        _web={{
-          shadow: 2,
-          borderWidth: 0,
-        }}
-        _light={{
-          backgroundColor: "gray.50",
-        }}
-      >
-        <Stack direction="row">
-          <Box>
-            <AspectRatio w="140" ratio={1 / 1}>
-              <Image
-                source={{
-                  uri: "https://spicecravings.com/wp-content/uploads/2020/12/Chicken-Kathi-Roll-Featured-1.jpg",
-                }}
-                alt="image"
-              />
-            </AspectRatio>
-          </Box>
-          <Stack p="4" space={3}>
-            <Stack space={2}>
-              <Heading size="md" ml="-1">
-                {props.name}
-              </Heading>
-            </Stack>
-            <Box width="40" overflow="hidden">
-              <Text fontWeight="400" >This restaurant serves this type of food blah blah blah</Text>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
+        <Modal.Content maxWidth="350">
+          <Modal.CloseButton />
+          <Modal.Header>Items Available</Modal.Header>
+          <Modal.Body>
+            <VStack space={3}>
+              {items}
+            </VStack>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+
+      <TouchableOpacity onPress={() => {
+        setCurrRes(props.name)
+        setShowModal(true)}}>
+        <Box
+          maxW="80"
+          rounded="lg"
+          overflow="hidden"
+          borderColor="coolGray.200"
+          borderWidth="1"
+          _dark={{
+            borderColor: "coolGray.600",
+            backgroundColor: "gray.700",
+          }}
+          _web={{
+            shadow: 2,
+            borderWidth: 0,
+          }}
+          _light={{
+            backgroundColor: "gray.50",
+          }}
+        >
+          <Stack direction="row">
+            <Box>
+              <AspectRatio w="140" ratio={1 / 1}>
+                <Image
+                  source={{
+                    uri: "https://spicecravings.com/wp-content/uploads/2020/12/Chicken-Kathi-Roll-Featured-1.jpg",
+                  }}
+                  alt="image"
+                />
+              </AspectRatio>
             </Box>
-            <HStack
-              alignItems="center"
-              space={4}
-              justifyContent="space-between"
-            ></HStack>
+            <Stack p="4" space={3}>
+              <Stack space={2}>
+                <Heading size="md" ml="-1">
+                  {props.name}
+                </Heading>
+              </Stack>
+              <Box width="40" overflow="hidden">
+                <Text fontWeight="400">
+                  This restaurant serves this type of food blah blah blah
+                </Text>
+              </Box>
+              <HStack
+                alignItems="center"
+                space={4}
+                justifyContent="space-between"
+              ></HStack>
+            </Stack>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+      </TouchableOpacity>
     </Box>
   );
 };
@@ -86,21 +154,17 @@ const Chooserpage = ({ navigation }) => {
       });
   };
 
-  curr = []
+  curr = [];
   if (restaurants) {
-    i = 0
-    for (var key in restaurants){
-      tempItem = (<Restaurant name = {key}/>)
-      curr[i] = tempItem
-      i++
+    i = 0;
+    for (var key in restaurants) {
+      tempItem = <Restaurant name={key} key={i} />;
+      curr[i] = tempItem;
+      i++;
     }
   }
 
-  return(
-    <View>
-      {curr}
-    </View>
-  )
+  return <View>{curr}</View>;
 
   // return (
   //   <View>
