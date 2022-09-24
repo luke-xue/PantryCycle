@@ -19,8 +19,11 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 const AddFoodItem = () => {
     return (
     <Formik
-        initialValues={{restaurant:'', item:'', description:'', quantity:''}}
-        onSubmit={(values) => console.log('submitted', values)}
+        initialValues={{restaurant:'', item:'', description:'', quantity:'', calories:''}}
+        onSubmit={(values, { resetForm }) => {
+            console.log('submitted', values)
+            resetForm({values: ''});
+        }}
 
 
     >
@@ -38,6 +41,7 @@ const AddFoodItem = () => {
               <FormControl.Label>Restaurant/Store Name</FormControl.Label>
               <Input 
               onChangeText={handleChange('restaurant')}
+              value={values.restaurant}
                 />
             </FormControl>
 
@@ -45,6 +49,7 @@ const AddFoodItem = () => {
               <FormControl.Label>Item Name</FormControl.Label>
               <Input 
                 onChangeText={handleChange('item')}
+                value={values.item}
               />
 
             </FormControl>
@@ -53,6 +58,7 @@ const AddFoodItem = () => {
               <FormControl.Label>Description</FormControl.Label>
               <Input 
                 onChangeText={handleChange('description')}
+                value={values.description}
               />
 
             </FormControl>
@@ -61,10 +67,25 @@ const AddFoodItem = () => {
               <FormControl.Label>Quantity</FormControl.Label>
               <Input 
                 onChangeText={handleChange('quantity')}
+                value={values.quantity}
               />
 
             </FormControl>
-            <Button onPress={handleSubmit} title="Submit"/>
+
+            <FormControl mb="5">
+              <FormControl.Label>Calories</FormControl.Label>
+              <Input 
+                onChangeText={handleChange('calories')}
+                value={values.calories}
+              />
+
+            </FormControl>
+
+            <Button 
+                onPress={handleSubmit} 
+                title="Submit"
+                style={styles.button}
+            >SUBMIT</Button>
           </Box>
         </Stack>
      
@@ -73,5 +94,17 @@ const AddFoodItem = () => {
     </Formik>
     )
   };
+
+  const styles = StyleSheet.create({
+    button: {
+      height: 40,
+      width: 100,
+      margin: 12,
+      padding: 10,
+      alignSelf: "center",
+      color: "red"
+    },
+});
+
 
   export default AddFoodItem;
