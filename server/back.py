@@ -24,16 +24,22 @@ def init():
 
 @app.route('/add', methods = ['POST']) 
 def add_item():
+    print("negion")
     Restaurant = request.json['Restaurant']
     Name = request.json['Name']
+    print("name")
     Type = request.json['Type']
     Count = request.json['Count']
     Lat = request.json['Lat']
+    print("late")
     Long = request.json['Long']
     Calories = request.json['Calories']
+    print("calor")
     Footprint = request.json['Footprint']
     Description = request.json['Description']
+    print("dscript")
     Image = request.json['Image']
+    print("after")
 
 
     if (Footprint == "n/a"):
