@@ -14,7 +14,7 @@ import {
 import { Formik } from "formik";
 import axios from "axios";
 
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { SafeAreaView, StyleSheet, View, TextInput } from "react-native";
 
 const addFood = async (in_val) => {
   const options = {
@@ -38,7 +38,9 @@ const addFood = async (in_val) => {
 
 const AddFoodItem = () => {
   return (
+    <View style={styles.bg}>
     <Formik
+    style={styles.form}
       initialValues={{
         restaurant: "",
         item: "",
@@ -121,18 +123,22 @@ const AddFoodItem = () => {
         </ScrollView>
       )}
     </Formik>
-  );
-};
+    </View>
+    )
+  };
 
-const styles = StyleSheet.create({
-  button: {
-    height: 40,
-    width: 100,
-    margin: 12,
-    padding: 10,
-    alignSelf: "center",
-    color: "red",
-  },
+  const styles = StyleSheet.create({
+    button: {
+      height: 40,
+      width: 100,
+      margin: 12,
+      padding: 10,
+      alignSelf: "center",
+      backgroundColor: "#87ab69"
+    },
+    bg: {
+        // backgroundColor: "#c7ddb5"
+    }
 });
 
 export default AddFoodItem;

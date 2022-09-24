@@ -26,7 +26,7 @@ import {
   const Giverpage = () => {
   
     return (
-        <Box>
+        <Box style={styles.givepage}>
             <AddFoodItem/>
         </Box>
 
@@ -34,6 +34,7 @@ import {
   };
   
   const styles = StyleSheet.create({
+  
     input: {
       height: 40,
       margin: 12,

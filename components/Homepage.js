@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, View, ViewPagerAndroidBase } from "react-native";
 import {
   NativeBaseProvider,
   Box,
@@ -17,50 +17,107 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState, useRef, useContext } from "react";
 
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 0,
+    height:100000,
+    backgroundColor: "#87ab69",
+  },
+  tinyLogo: {
+    width: 150,
+    height: 150,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
+});
+
+const image = { uri: "./istockphoto-942483984-170667a.jpeg" };
+
 const Homepage = ({ navigation }) => {
   return (
+    <View style={styles.container} >
     <Center w="100%">
       <Box safeArea p="2" py="8" w="90%" maxW="290">
         <Heading
           size="lg"
-          fontWeight="600"
-          color="coolGray.800"
+          fontWeight="bold"
+          fontStyle="italic"
+          fontSize="40"
+          textAlign="center"
+          color="white"
           _dark={{
             color: "warmGray.50",
           }}
         >
-          Welcome to PantryCycle
+          PantryCycle
         </Heading>
         <Heading
           mt="1"
           _dark={{
-            color: "warmGray.200",
+            color: "white",
           }}
-          color="coolGray.600"
+          color="white"
           fontWeight="medium"
-          size="xs"
+          textAlign = "center"
+          fontSize="20"
         >
-          Please select your role.
-        </Heading>
+          good tastes, no food wastes!
+        </Heading >
 
-        <VStack space={3} mt="5">
+          <Heading mt="120"
+          _dark={{
+            color: "white",
+          }}
+          color="white"
+          fontWeight="bold"
+          textAlign = "center"
+          fontSize="20">
+            I AM A...
+          </Heading>
 
-          <Button mt="2" colorScheme="indigo"
+        <VStack space={3} mt="2">
+          
+          {/* <Text style={{color: "red"}}>Hello Style!</Text> */}
+
+          <Button mt="2" variant="subtle"
+          colorScheme="primary"
           onPress={() =>
             navigation.navigate('Giver')
           }>
-            Giver
+            Provider
           </Button>
-          
-          <Button mt="2" colorScheme="indigo"
+
+          <Button mt="5" variant="subtle"
+          colorScheme="primary"
           onPress={() =>
             navigation.navigate('Chooser')
           }>
             Chooser
           </Button>
+
+              <Image mt="70"
+              alignSelf="center"
+            style={styles.tinyLogo}
+            alt="something"
+            source={{
+              // uri: 'https://reactnative.dev/img/tiny_logo.png'
+              uri: 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/1556249/earth-clipart-md.png',
+            }}
+          />
         </VStack>
       </Box>
     </Center>
+    </View>
   );
 };
 
