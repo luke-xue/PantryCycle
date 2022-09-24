@@ -44,9 +44,14 @@ const Homepage = ({ navigation }) => {
         </Heading>
 
         <VStack space={3} mt="5">
-          <Button mt="2" colorScheme="indigo">
-            Beggar
+
+          <Button mt="2" colorScheme="indigo"
+          onPress={() =>
+            navigation.navigate('Giver')
+          }>
+            Giver
           </Button>
+          
           <Button mt="2" colorScheme="indigo"
           onPress={() =>
             navigation.navigate('Chooser')
