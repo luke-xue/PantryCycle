@@ -27,7 +27,7 @@ const addFood = async (in_val) => {
     Lat: 123,
     Long: 123,
     Calories: parseInt(in_val.calories),
-    Footprint: 123,
+    Footprint: "n/a",
     Description: in_val.description,
     Image: "N/A",
     //  })
