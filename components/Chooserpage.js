@@ -51,20 +51,6 @@ const Restaurant = (props) => {
               <Heading size="md" ml="-1">
                 {props.name}
               </Heading>
-              {/* <Text
-                fontSize="xs"
-                _light={{
-                  color: "violet.500",
-                }}
-                _dark={{
-                  color: "violet.400",
-                }}
-                fontWeight="500"
-                ml="-0.5"
-                mt="-1"
-              >
-                MMMMMMMmmmm so yummy
-              </Text> */}
             </Stack>
             <Box width="40" overflow="hidden">
               <Text fontWeight="400" >This restaurant serves this type of food blah blah blah</Text>
