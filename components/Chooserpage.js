@@ -7,18 +7,14 @@ import {
   Image,
   Center,
   Heading,
-  FormControl,
-  Input,
-  Link,
-  Button,
   AspectRatio,
   Stack,
   Text,
+  View,
 } from "native-base";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useEffect, useState } from "react";
 
-const Restaurant = () => {
+const Restaurant = (props) => {
   return (
     <Box alignItems="center">
       <Box
@@ -41,7 +37,7 @@ const Restaurant = () => {
       >
         <Stack direction="row">
           <Box>
-            <AspectRatio w="130" ratio={1 / 1}>
+            <AspectRatio w="140" ratio={1 / 1}>
               <Image
                 source={{
                   uri: "https://spicecravings.com/wp-content/uploads/2020/12/Chicken-Kathi-Roll-Featured-1.jpg",
@@ -53,9 +49,9 @@ const Restaurant = () => {
           <Stack p="4" space={3}>
             <Stack space={2}>
               <Heading size="md" ml="-1">
-                Roti Roll
+                {props.name}
               </Heading>
-              <Text
+              {/* <Text
                 fontSize="xs"
                 _light={{
                   color: "violet.500",
@@ -68,15 +64,16 @@ const Restaurant = () => {
                 mt="-1"
               >
                 MMMMMMMmmmm so yummy
-              </Text>
+              </Text> */}
             </Stack>
-            <Text fontWeight="400">yummy Bombay Frankie</Text>
+            <Box width="40" overflow="hidden">
+              <Text fontWeight="400" >This restaurant serves this type of food blah blah blah</Text>
+            </Box>
             <HStack
               alignItems="center"
               space={4}
               justifyContent="space-between"
-            >
-            </HStack>
+            ></HStack>
           </Stack>
         </Stack>
       </Box>
@@ -85,7 +82,48 @@ const Restaurant = () => {
 };
 
 const Chooserpage = ({ navigation }) => {
-  return <Restaurant />;
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  const getRestaurants = async () => {
+    const options = {
+      method: "GET",
+    };
+
+    fetch("http://127.0.0.1:5000/readAll", options)
+      .then((res) => res.json())
+      .then((text) => {
+        setRestaurants(text);
+      });
+  };
+
+  curr = []
+  if (restaurants) {
+    i = 0
+    for (var key in restaurants){
+      tempItem = (<Restaurant name = {key}/>)
+      curr[i] = tempItem
+      i++
+    }
+  }
+
+  return(
+    <View>
+      {curr}
+    </View>
+  )
+
+  // return (
+  //   <View>
+  //     {restaurants.length > 0 &&
+  //       restaurants.map((val, key) => {
+  //         return <Restaurant name={val} />;
+  //       })}
+  //   </View>
+  // );
 };
 
 export default Chooserpage;

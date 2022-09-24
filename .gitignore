@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+divhacks-d18b7-firebase-adminsdk-odcaf-7a5ab53b14.json
 
 # macOS
 .DS_Store

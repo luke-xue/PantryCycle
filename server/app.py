@@ -1,9 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+
+
+
 import time
-import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+
 import json
+
+import fire
 
 hostName = "localhost"
 serverPort = 8080
@@ -21,6 +25,15 @@ class MyServer(BaseHTTPRequestHandler):
         
         if (self.path == "/test"):
             self.wfile.write(bytes("<p>Test.</p>", "utf-8"))
+        if (self.path == "/initialize"):
+            fire.initialize()
+        if (self.path == "/reset"):
+            fire.reset()
+            self.wfile.write(bytes("<p>RESET.</p>", "utf-8"))
+        if (self.path == "/addBurger"):
+
+            fire.writedb()
+            self.wfile.write(bytes("<p>add Burger.</p>", "utf-8"))
         
 
         # self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
@@ -28,6 +41,7 @@ class MyServer(BaseHTTPRequestHandler):
         # self.wfile.write(bytes("<body>", "utf-8"))
         # self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         # self.wfile.write(bytes("</body></html>", "utf-8"))
+    
 
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), MyServer)
