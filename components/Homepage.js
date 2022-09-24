@@ -15,6 +15,7 @@ import {
 } from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect, useState, useRef, useContext } from "react";
 
 const Homepage = ({ navigation }) => {
   return (
