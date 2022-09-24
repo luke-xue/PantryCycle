@@ -3,6 +3,7 @@ from firebase_admin import db
 from firebase_admin import credentials
 import json
 import geopy.distance
+import math
 
 # Collection is a dictionary where we map "All" : all restaurants
 # all restaurants: a dictionary where each {key : value} pairing is key=restaurant value= a list
@@ -65,15 +66,23 @@ def rank(lat, long):
 	all_shops = ref.get()
 	#print(all_shops)
 	#print(type(all_shops))
+	pairings = {}
+
 	ranker = {}
 
+
 	for restaurant, lst in all_shops.items():
+		total_score = 0
+		count = 0
 		for shop_params in lst: # actual individual shops now
+			count = count + 1
 			#print(shop)
 			#print(type(shop))
 			calories = shop_params["Calories"]
 			Lat = shop_params["Lat"]
 			Long = shop_params["Long"]
+			count = shop_params["Count"]
+			carbon = shop_params["Footprint"]
 			coords_1 = (lat, long)
 			coords_2 = (Lat, Long)
 			dist = geopy.distance.geodesic(coords_1, coords_2).miles
@@ -81,11 +90,20 @@ def rank(lat, long):
 			# dist = distance(lat, long, Lat, Long)
 			print("dist: ", dist)
 
-			# higher score is better! which is why distance is negative 
-			score = (calories / 1000.0) - dist
-			ranker[score] = (restaurant, shop_params["Name"])
+			# lower score is better! which is why count / calories is negative 
+			total_score = total_score - (math.log(count) * calories / 6) + dist * 850 + carbon * math.log(count)
+		total_score = total_score / count
+		ranker[total_score] = lst
+		pairings[total_score] = restaurant
 
-	return dict(sorted(ranker.items()))
+		# ranker[total_score] = (restaurant, shop_params["Name"], count, carbon, shop_params["Image"])
+	answer = dict(sorted(ranker.items()))
+	pairings = dict(sorted(pairings.items()))
+	# for key, val in pairings.items():
+	# 	answer[val] = answer[key]
+	# 	del answer[key]
+
+	return answer 
 
 
 

@@ -36,6 +36,27 @@ def add_item():
     Image = request.json['Image']
 
 
+    if (Footprint == "n/a"):
+        carbon_grams = -1
+        if (Type == "Carbs"):
+            grams = Calories / 4 
+            carbon_grams = 0.75 * grams
+
+
+        if (Type == "Protein"):
+            grams = Calories / 4
+            carbon_grams = 10 * grams
+
+        if (Type == "Fruits" or Type == "Vegetables"):
+            grams = Calories
+            carbon_grams = 0.5 * grams 
+
+        carbon_grams = carbon_grams* 3.5 # waste / decay 
+
+        Footprint = round(carbon_grams, 1)
+
+
+
     # # ----- SECTION 2 -----
     # try:
     #     # Base64 DATA
@@ -101,44 +122,3 @@ if __name__ == "__main__":
 
 
 
-
-@app.route("/send-image/<path:url>", methods = ['POST'])
-def image_check(url):
-    Restaurant = request.json['Restaurant']
-    Name = request.json['Name']
-    base64 = request.json['base64']
-    
-    # ----- SECTION 2 -----
-    try:
-        # Base64 DATA
-        if "data:image/jpeg;base64," in url:
-            base_string = url.replace("data:image/jpeg;base64,", "")
-            decoded_img = base64.b64decode(base_string)
-            img = Image.open(BytesIO(decoded_img))
-
-            file_name = Restaurant + ".jpg"
-            img.save(file_name, "jpeg")
-
-        # Base64 DATA
-        elif "data:image/png;base64," in url:
-            base_string = url.replace("data:image/png;base64,", "")
-            decoded_img = base64.b64decode(base_string)
-            img = Image.open(BytesIO(decoded_img))
-
-            file_name = Restaurant + ".png"
-            img.save(file_name, "png")
-
-        # Regular URL Form DATA
-        else:
-            response = requests.get(url)
-            img = Image.open(BytesIO(response.content)).convert("RGB")
-            file_name = Restaurant + ".jpg"
-            img.save(file_name, "jpeg")
-        
-    # ----- SECTION 3 -----    
-        status = "Image has been succesfully sent to the server."
-    except Exception as e:
-        status = "Error! = " + str(e)
-
-
-    return status
