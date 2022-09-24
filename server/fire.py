@@ -57,7 +57,7 @@ def readAll():
 	directory = "/All/" 
 	ref = db.reference(directory)
 	return ref.get()
-e
+
 
 def rank(lat, long):
 	directory = "/All/" 
